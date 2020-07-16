@@ -1,0 +1,34 @@
+TARGET = test
+LIBS = -lm  #List of external libraries required to link against (here m is the math Library, just a placeholder)
+HEADERS = binarySearchTree.h binaryNode.h#List of all header files
+SRCS = binaryNode.cpp binarySearchTree.cpp  main.cpp#List of all source files
+OBJECTS := $(patsubst %.cpp,%.o,$(SRCS))  #Creates a list of object files (.o) for every entry under SRCS (source files)
+CXX = g++ #compiler command to be used
+CXX_FLAGS = -Wall -std=c++11 -w #compilation flags to be used (here std=c++11 is just for reference, not necessary)
+
+#Rule that states that default all and clean are make commands and not associated with any files
+.PHONY: default all clean
+
+#Rule that defers make all to the TARGET rule
+all: depend $(TARGET)
+
+#Rules to recompile template headers when they change
+depend: .depend
+.depend: $(HEADERS)
+	rm -f ./.depend
+	$(CXX) $(CXX_FLAGS) -MM $^ > ./.depend;
+include .depend
+
+#Rule to compile a single object file
+%.o: %.cpp $(HEADERS)
+	$(CXX) $(CXX_FLAGS) -c $< -o $@
+
+#Rule that makes all object files in the OBJECTS list, then links them all together to produce TARGET executable
+$(TARGET): $(OBJECTS)
+	$(CXX) $(CXX_FLAGS) $(OBJECTS) $(LIBS) -o $@
+
+#Rule to clean up the build (removes iteratively all object files .o and the execitable TARGET)
+clean:
+	-rm -f  *.o output
+	-rm -f ./.depend
+	-rm -f  $(TARGET)
