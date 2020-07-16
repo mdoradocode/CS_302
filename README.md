@@ -1,1 +1,1 @@
-# CS_302
+This contains all my projects for my Data Structures clss. Most basic data structures are present at one point or another in these sets of projects inlcluding normal ADT's and more advanced ADT's like graph, search trees, dictionaries.
