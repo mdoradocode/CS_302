@@ -22,5 +22,5 @@ $(TARGET): $(OBJECTS)
 
 #Rule to clean up the build (removes iteratively all object files .o and the execitable TARGET)
 clean:
-	-rm -f *.o
+	-rm -f  *.o
 	-rm -f $(TARGET)
